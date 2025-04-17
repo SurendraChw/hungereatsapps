@@ -1,0 +1,7 @@
+{
+  "name": "hungereats",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

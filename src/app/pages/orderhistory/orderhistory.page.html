@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Orders History</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [style.--padding-bottom.px]="100">
+  <ion-list class="ord-list">
+    <ion-item *ngFor="let order of orders" (click)="goToOrderDetail(order.id)">
+      <ion-label>
+        <h2 class="order-status">
+          Order Placed
+          <ion-icon
+            [name]="order.status === 'Success' ? 'checkmark-circle' : 'close-circle'"
+            [color]="order.status === 'Success' ? 'success' : 'danger'"
+            class="status-icon"
+          ></ion-icon>
+        </h2>
+        <p>{{ order.date | date: 'MM/dd/yyyy, hh:mm a' }}</p>
+      </ion-label>
+      <ion-note class="price-cls" slot="end">${{ order.total }}</ion-note>
+      <ion-icon class="forward-arrow-cls" name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

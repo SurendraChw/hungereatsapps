@@ -1,0 +1,385 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+ion-content {
+    --background: #f8f9fa; // light gray
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+ion-label {
+    color: black !important;
+}
+
+ion-input {
+    color: black !important;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.app-logo {
+    width: 150px;
+    height: auto;
+    max-width: 80%;
+}
+
+ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --padding-start: 12px;
+    --inner-padding-end: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+ion-input {
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+}
+
+ion-button {
+    margin-top: 20px;
+    border-radius: 10px;
+    height: 48px;
+    color: white !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+ion-title {
+    color: white !important;
+}
+
+ion-card {
+    background: white !important;
+}
+
+ion-row {
+    background: white !important;
+    color: black !important;
+}
+
+ion-radio {
+    margin-right: 10px;
+}
+
+.error-text {
+    font-size: 13px;
+    padding-left: 16px;
+    margin-top: 4px;
+}
+
+ion-toggle {
+    --handle-background: white;
+    --handle-border-radius: 50%;
+}
+
+ion-menu-button {
+    color: white !important;
+}
+
+ion-card-title {
+    color: black !important;
+}
+
+ion-back-button {
+    color: white !important;
+}
+
+.tlt-cls {
+    font-size: 18px;
+}
+
+.ord-list {
+    background: white !important;
+}
+
+.toggle-container {
+    color: black !important;
+}
+
+.order-type-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px 15px 15px;
+}
+
+.left-label {
+    font-weight: bold;
+    flex: 1;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: black !important;
+}
+
+.item-description {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.price-action-row {
+    margin-top: 4px;
+    align-items: center;
+    color: black !important;
+}
+
+.dec-cls {
+    height: 25px !important;
+}
+
+.inc-cls {
+    height: 25px !important;
+}
+
+// .quantity {
+//     font-size: 16px;
+//     min-width: 24px;
+//     text-align: center;
+//     line-height: 1;
+// }
+
+.sidebar-list {
+    background: white !important;
+}
+
+.price-cls {
+    font-size: 18px;
+    color: black !important;
+}
+
+ion-item.menu-cls.item.md.item-lines-default.in-list.hydrated {
+    color: black !important;
+}
+
+.status-icon {
+    font-size: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
+.order-status {
+    display: flex;
+    align-items: center;
+}
+
+.forward-arrow-cls {
+    padding-left: 10px !important;
+}
+
+.tlt-amt-cls {
+    text-align: center;
+    font-size: 18px;
+}
+
+
+
+
+
+
+// 15/04/2024
+
+.item-card {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    margin: 12px 0;
+    padding: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+  }
+  
+  .item-header {
+    margin-bottom: 10px;
+  }
+  
+  .item-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .item-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .price-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .price-col {
+    flex: 1;
+  }
+  
+  .item-price {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .quantity-col {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .quantity {
+    width: 32px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .dec-btn,
+  .inc-btn {
+    padding: 4px 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    background-color: #3880ff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .dec-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .bottom-sheet {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 9999; /* Make sure it's above ion-footer */
+    max-height: 50vh;
+    overflow-y: auto;
+    color: black !important;
+  }
+  
+  .bottom-sheet.show {
+    transform: translateY(0);
+  }
+  
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+  
+  .sheet-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .close-icon {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    background: #f4f4f4;
+    border-radius: 6px;
+  }
+  
+  .sheet-body {
+    margin-top: 12px;
+    font-size: 16px;
+  }
+
+  .menu-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0 10px;
+    color: #FC6143 !important;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+
+//   .orange-btn {
+//     --background: #FC6143 !important;
+//     --color: white !important;
+//   }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ion-background-color: #ffffff;
+        --ion-text-color: #000000;
+        // override other dark mode vars as needed
+    }
+}

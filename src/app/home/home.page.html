@@ -1,0 +1,149 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button> <!-- Hamburger -->
+    </ion-buttons>
+    <ion-title>Menu</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="reset-cls" (click)="resetOrder()">Reset</ion-button>
+      <!-- <ion-button class="logout-cls" color="danger" (click)="logout()">Logout</ion-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [style.--padding-bottom.px]="100">
+  <div lines="none" class="order-type-item">
+    <!-- Left side label -->
+    <ion-label class="left-label">Order Type</ion-label>
+
+    <!-- Right side content -->
+    <div class="toggle-container">
+      <span>Normal</span>
+      <ion-toggle
+        [(ngModel)]="isPhoneOrder"
+        (ionChange)="updateOrderType($event)"
+        color="primary"
+      ></ion-toggle>
+      <span>Phone</span>
+    </div>
+  </div>
+  
+  <!-- below code display the items in Card view -->
+  <!-- <ion-card *ngFor="let item of items">
+    <ion-card-header>
+      <ion-card-title class="item-name">{{ item.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class="item-description">{{ item.description }}</p>
+      <ion-row class="ion-align-items-center ion-justify-content-between price-action-row">
+        <ion-col size="6">
+          <p class="item-price"><strong>Price:</strong> ${{ item.price }}</p>
+        </ion-col>
+        <ion-col size="6" class="ion-text-right">
+          <div class="quantity-control">
+            <ion-button class="dec-cls" size="small" (click)="decrement(item)" [disabled]="item.quantity === 0">-</ion-button>
+            <div class="quantity">{{ item.quantity }}</div>
+            <ion-button class="inc-cls" size="small" (click)="increment(item)">+</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card> -->
+
+  <!-- below code display only items -->
+  <!-- <div class="item-card" *ngFor="let item of items">
+    <div class="item-header" (click)="openItemDetails(item)">
+      <h2 class="item-name">{{ item.name }}</h2>
+    </div>
+    <div class="item-content">  
+      <div class="price-action-row">
+        <div class="price-col">
+          <p class="item-price"><strong>Price:</strong> ${{ item.price }}</p>
+        </div>
+        <div class="quantity-col">
+          <div class="quantity-control">
+            <button class="dec-btn" (click)="decrement(item)" [disabled]="item.quantity === 0">-</button>
+            <div class="quantity">{{ item.quantity }}</div>
+            <button class="inc-btn" (click)="increment(item)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- below code display the menu and menu based on the items -->
+  <div *ngFor="let menu of groupedItems">
+    <h2 class="menu-title">{{ menu.name }}</h2>
+    <div class="item-card" *ngFor="let item of menu.items">
+      <div class="item-header" (click)="openItemDetails(item)">
+        <h3 class="item-name">{{ item.name }}</h3>
+      </div>
+      <div class="item-content">
+        <div class="price-action-row">
+          <div class="price-col">
+            <p class="item-price"><strong>Price:</strong> ${{ item.price }}</p>
+          </div>
+          <div class="quantity-col">
+            <div class="quantity-control">
+              <button class="dec-btn" (click)="decrement(item)" [disabled]="item.quantity === 0">-</button>
+              <div class="quantity">{{ item.quantity }}</div>
+              <button class="inc-btn" (click)="increment(item)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Popup Bottom Sheet -->
+  <div class="bottom-sheet" [class.show]="showPopup">
+    <div class="sheet-header">
+      <h3>{{ selectedItem?.name }}</h3>
+      <span class="close-icon" (click)="closePopup()">✖</span>
+    </div>
+    <div class="sheet-body">
+      <p>{{ selectedItem?.description }}</p>
+    </div>
+  </div>
+
+  <!-- <ion-card *ngFor="let item of items">
+    <ion-card-header>
+      <ion-card-title>{{ item.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ item.description }}</p>
+      <p><strong>Price:</strong> ${{ item.price }}</p>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="6">
+          <ion-button size="small" (click)="decrement(item)" [disabled]="item.quantity === 0">-</ion-button>
+          <span class="ion-padding-horizontal">{{ item.quantity }}</span>
+          <ion-button size="small" (click)="increment(item)">+</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card> -->
+
+  
+  <!-- <ion-footer class="ion-padding">
+    <h3>Total: ${{ totalPrice }}</h3>
+    <ion-button expand="block" color="success" (click)="confirmOrder()" [disabled]="totalPrice === 0">
+      Confirm Order
+    </ion-button>
+  </ion-footer> -->
+</ion-content>
+
+<ion-footer class="footer-total">
+  <ion-toolbar>
+    <ion-row class="ion-align-items-center ion-justify-content-between ion-padding-horizontal">
+      <ion-col size="6">
+        <h3 class="tlt-cls">Total: ${{ totalPrice }}</h3>
+      </ion-col>
+      <ion-col size="6" class="ion-text-right">
+        <ion-button color="success" (click)="confirmOrder()" [disabled]="totalPrice === 0">
+          Confirm Order
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
