@@ -21,15 +21,20 @@ export class AppComponent {
   //Method for initializing the app
   async initializeapp() {
     await this.storage.create();
+    // Check if user is logged in
     this.storage.get('loginInfo').then((val) => {
       console.log('loginInfo:', val);
       if (val == null || val == undefined || val == "") {
         this.router.navigate(['/login']);
       } else {
-        const loginInfo = JSON.parse(val);      
+        const loginInfo = JSON.parse(val);
         console.log('loginInfo name:', loginInfo.name);
         this.commonService.userRole = loginInfo.role;
         console.log('AppComponent userRole:', this.commonService.userRole);
+        this.storage.get('loginUserId').then((userId) => {
+          this.commonService.userId = userId;
+          console.log('AppComponent userId:', this.commonService.userId);
+        })
         this.router.navigate(['/home']);
       }  
     })
@@ -78,8 +83,8 @@ export class AppComponent {
               console.log('all keys cleared');
             });
             this.commonService.allLocalStorage = {};
-
             this.commonService.setLocalStorageByKeyValue('loginInfo', "");
+            this.commonService.setLocalStorageByKeyValue('loginUserId', "");
             this.router.navigateByUrl('/');
           }
         }

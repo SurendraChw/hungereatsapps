@@ -4,6 +4,8 @@ import { AuthService } from '../services/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { CommonserviceService } from '../services/commonservice.service';
+import { LoadingController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -23,14 +25,16 @@ export class HomePage {
   menus: any[] = [];
   items: any[] = [];
   groupedItems: any[] = [];
-  orderType = 'Normal';
+  orderType = 'Walkin';
   isPhoneOrder: boolean = false;
 
   selectedItem: any = null;
   showPopup: boolean = false;
 
   // Injecting Router and AuthService for navigation and authentication
-  constructor(private router: Router, private auth: AuthService, private firestore: AngularFirestore, public commonService: CommonserviceService) {}
+  constructor(private router: Router, private auth: AuthService, private firestore: AngularFirestore, public commonService: CommonserviceService,
+    private loadingCtrl: LoadingController, private platform: Platform
+  ) {}
 
   // Initialize item quantities to zero when the component is created
   ngOnInit() {
@@ -45,8 +49,8 @@ export class HomePage {
   }
 
   async getMenuItemsData() {
+    const loader = await this.showLoader(); // Display loader
 
-    
     const db = getFirestore(); // Initialize Firestore
 
     const usersRef1 = collection(db, 'menus');
@@ -85,10 +89,29 @@ export class HomePage {
     } else {
       this.commonService.showToast("No Data Found");
     }
+    this.hideLoader(loader);
     // const snapshot = await this.firestore.firestore.collection('items').get();
     // snapshot.forEach(doc => {
     //   console.log(doc.id, '=>', doc.data());
     // });
+  }
+
+  //Show loader
+  async showLoader() {
+    const isIOS = this.platform.is('ios');
+    const loader = await this.loadingCtrl.create({
+      message: '',
+      cssClass: isIOS ? '' : 'custom-spinner',
+    });
+    await loader.present();
+    return loader;
+  }
+
+  //Hide loader
+  async hideLoader(loader: HTMLIonLoadingElement) {
+    if (loader) {
+      await loader.dismiss();
+    }
   }
 
   // Calculate total price based on item quantities
@@ -113,7 +136,7 @@ export class HomePage {
 
   // Update order type based on toggle switch
   updateOrderType(event: any) {
-    this.orderType = event.detail.checked ? 'Phone' : 'Normal';
+    this.orderType = event.detail.checked ? 'Phone' : 'Walkin';
   }
 
   // Open the popup for item details

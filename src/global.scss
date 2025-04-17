@@ -165,8 +165,16 @@ ion-back-button {
     flex-shrink: 0;
 }
 
+.item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+}
+
 .item-name {
-    font-size: 16px;
+    // font-size: 16px; //15/04/2025
+    flex: 2;
     font-weight: 600;
     color: black !important;
 }
@@ -225,6 +233,7 @@ ion-item.menu-cls.item.md.item-lines-default.in-list.hydrated {
 
 .forward-arrow-cls {
     padding-left: 10px !important;
+    color: black !important;
 }
 
 .tlt-amt-cls {
@@ -237,7 +246,7 @@ ion-item.menu-cls.item.md.item-lines-default.in-list.hydrated {
 
 
 
-// 15/04/2024
+// 15/04/2025
 
 .item-card {
     border: 1px solid #ccc;
@@ -274,8 +283,11 @@ ion-item.menu-cls.item.md.item-lines-default.in-list.hydrated {
   }
   
   .item-price {
-    font-size: 16px;
-    margin: 0;
+    // font-size: 16px; //15/04/2025
+    // margin: 0; //15/04/2025
+    flex: 1;
+    text-align: right;
+    color: black !important;
   }
   
   .quantity-col {
@@ -288,26 +300,46 @@ ion-item.menu-cls.item.md.item-lines-default.in-list.hydrated {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
+    //gap: 8px; //15/04/2025
+    gap: 6px;
+    flex: 1;
+    padding: 0px 0px 0px 15px;
   }
   
   .quantity {
     width: 32px;
     text-align: center;
     font-weight: bold;
+    color: black !important;
   }
   
   .dec-btn,
   .inc-btn {
-    padding: 4px 10px;
+    // padding: 4px 10px; //15/04/2025
+    // font-size: 18px; //15/04/2025
+    // border: none; //15/04/2025
+    // border-radius: 6px; //15/04/2025
+    // background-color: #3880ff; //15/04/2025
+    // color: #fff; //15/04/2025
+    // cursor: pointer; //15/04/2025
+
+    width: 28px;
+    height: 28px;
     font-size: 18px;
     border: none;
-    border-radius: 6px;
-    background-color: #3880ff;
-    color: #fff;
+    border-radius: 4px;
+    color: white;
     cursor: pointer;
   }
+
+  .btn-grey {
+    background-color: #ccc !important;
+  }
   
+  .btn-blue {
+    background-color: #007bff !important;
+  }
+
   .dec-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
@@ -367,8 +399,28 @@ ion-item.menu-cls.item.md.item-lines-default.in-list.hydrated {
     font-weight: bold;
     margin: 20px 0 10px;
     color: #FC6143 !important;
-    border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
+  }
+
+  .custom-spinner .loading-wrapper {
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    background-image: url(/assets/images/loader.gif);
+    background-size: cover;
+  }
+
+  .custom-spinner .loading-wrapper .loading-spinner ion-spinner.sc-ion-loading-md {
+     display: none !important;
+  }
+
+  .custom_alert_class {
+    --background: white !important;
+    font-size: max(14px, 0.875rem);
+  }
+
+  .order-type-item {
+    padding: 10px 0px 10px 0px;
   }
 
 //   .orange-btn {

@@ -9,6 +9,11 @@ export class CommonserviceService {
 
   allLocalStorage: any = {};
   userRole: any;
+  userId: any;
+  
+  adminRole: any = '1'; //Admin Role
+  managerRole: any = '2'; //Manager Role
+  employeeRole: any = '3'; //Employee Role
 
   constructor(private storage: Storage, private toastCtrl: ToastController) { }
 

@@ -12,7 +12,7 @@ import { CommonserviceService } from 'src/app/services/commonservice.service';
 export class OrderdetailsPage implements OnInit {
   orderItems: any[] = [];
   total: number = 0;
-  orderStatus: string = 'Normal';
+  orderStatus: string = 'Walkin';
 
   constructor(private router: Router, private firestore: AngularFirestore, public commonService: CommonserviceService) {
     const nav = this.router.getCurrentNavigation();
@@ -20,7 +20,7 @@ export class OrderdetailsPage implements OnInit {
     if (state) {
       this.orderItems = state.order;
       this.total = state.total;
-      this.orderStatus = state?.status || 'Normal';
+      this.orderStatus = state?.status || 'Walkin';
     }
   }
 
@@ -36,6 +36,8 @@ export class OrderdetailsPage implements OnInit {
         status: 'Success',
         date: new Date(),
         total: this.total,
+        ordertype: this.orderStatus,
+        createdby: this.commonService.userId,
       });
 
       const orderId = orderRef.id;

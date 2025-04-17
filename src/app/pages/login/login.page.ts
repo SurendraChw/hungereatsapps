@@ -75,14 +75,19 @@ export class LoginPage implements OnInit {
         
         try {
           const snapshot = await getDocs(q);
+          // check if the snapshot is empty
           if (!snapshot.empty) {
+            console.log('Login:', snapshot.docs[0]);
             console.log('Login details:', snapshot.docs[0].data());
+            console.log('Login id:', snapshot.docs[0].id);
             const jsonObj: any = {};
             jsonObj.email = this.email;
             jsonObj.password = this.password;
             this.commonService.showToast("Logged In Successfully");
             this.commonService.setLocalStorageByKeyValue('loginInfo', JSON.stringify(snapshot.docs[0].data()));
+            this.commonService.setLocalStorageByKeyValue('loginUserId', snapshot.docs[0].id);
             this.commonService.userRole = snapshot.docs[0].data()['role'];
+            this.commonService.userId = snapshot.docs[0].id;
             console.log('userRole:', this.commonService.userRole);
             this.router.navigateByUrl('/home');
           } else {

@@ -18,7 +18,7 @@
 
     <!-- Right side content -->
     <div class="toggle-container">
-      <span>Normal</span>
+      <span>Walkin</span>
       <ion-toggle
         [(ngModel)]="isPhoneOrder"
         (ionChange)="updateOrderType($event)"
@@ -71,8 +71,8 @@
     </div>
   </div> -->
 
-  <!-- below code display the menu and menu based on the items -->
-  <div *ngFor="let menu of groupedItems">
+  <!-- below code display the menu and menu based on the item name, price -->
+  <!-- <div *ngFor="let menu of groupedItems">
     <h2 class="menu-title">{{ menu.name }}</h2>
     <div class="item-card" *ngFor="let item of menu.items">
       <div class="item-header" (click)="openItemDetails(item)">
@@ -93,8 +93,25 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
+
+  <!-- below code display the menu and menu based on the item name, price in the single line -->
+  <div *ngFor="let menu of groupedItems">
+    <h2 class="menu-title">{{ menu.name }}</h2>
+    <div class="item-card" *ngFor="let item of menu.items">
+      <div class="item-row">
+        <div class="item-name">{{ item.name }}</div>
+        <div class="item-price">${{ item.price }}</div>
+        <div class="quantity-control">
+          <button class="dec-btn" [ngClass]="{ 'btn-grey': item.quantity === '0', 'btn-blue': item.quantity > 0 }" 
+              (click)="decrement(item)" [disabled]="item.quantity === 0">-</button>
+          <div class="quantity">{{ item.quantity }}</div>
+          <button class="inc-btn btn-blue" (click)="increment(item)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Popup Bottom Sheet -->
   <div class="bottom-sheet" [class.show]="showPopup">

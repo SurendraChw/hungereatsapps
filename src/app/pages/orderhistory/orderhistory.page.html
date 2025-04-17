@@ -18,6 +18,9 @@
             [color]="order.status === 'Success' ? 'success' : 'danger'"
             class="status-icon"
           ></ion-icon>
+          <ion-badge [color]="order.ordertype === 'Phone' ? 'warning' : 'primary'" class="ordertype-badge">
+            {{ order.ordertype }}
+          </ion-badge>
         </h2>
         <p>{{ order.date | date: 'MM/dd/yyyy, hh:mm a' }}</p>
       </ion-label>
