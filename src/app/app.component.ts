@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { AlertController, MenuController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { CommonserviceService } from './services/commonservice.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Platform } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs'; // Add this import at the top
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Network } from '@ionic-native/network/ngx';
+import { IonRouterOutlet, LoadingController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -12,27 +18,76 @@ import { CommonserviceService } from './services/commonservice.service';
   standalone: false,
 })
 export class AppComponent {
-  constructor(private router: Router, private auth: AuthService, private menuCtrl: MenuController, private storage: Storage, 
-    private commonService: CommonserviceService, private alertCtrl: AlertController) {
+  /* get a reference to the used IonRouterOutlet 
+  assuming this code is placed in the component
+  that hosts the main router outlet, probably app.components */
+  @ViewChild(IonRouterOutlet, { static: true }) routerOutlet!: IonRouterOutlet;
+
+  version: any;
+  constructor(private router: Router, private auth: AuthService, private menuCtrl: MenuController, private storage: Storage, private appVersionService: AppVersion,
+    private commonService: CommonserviceService, private alertCtrl: AlertController,  private firestore: AngularFirestore, private platform: Platform, 
+    private network: Network) {
     
-    this.initializeapp();
   }
 
   //Method for initializing the app
   async initializeapp() {
+    debugger
     await this.storage.create();
     this.storage.get('loginInfo').then((val) => {
       console.log('loginInfo:', val);
       if (val == null || val == undefined || val == "") {
         this.router.navigate(['/login']);
       } else {
-        const loginInfo = JSON.parse(val);      
+        const loginInfo = JSON.parse(val);
         console.log('loginInfo name:', loginInfo.name);
         this.commonService.userRole = loginInfo.role;
         console.log('AppComponent userRole:', this.commonService.userRole);
+        this.storage.get('loginUserId').then((userId) => {
+          this.commonService.userId = userId;
+          console.log('AppComponent userId:', this.commonService.userId);
+        })
         this.router.navigate(['/home']);
       }  
     })
+
+  }
+
+  ngOnInit() {
+    this.platform.ready().then(() => {
+      debugger
+      console.log("Network type is::::::", this.network.type);
+      this.platform.backButton.subscribeWithPriority(9999, (processNextHandler) => {
+        console.log('Back button blocked');
+        // Not calling processNextHandler() prevents bubbling.
+      });
+      //this.checkAndSeedMenus();
+      //this.commonService.seedMenusAndUsers();
+      this.appVersionService.getVersionNumber().then(version => {
+        this.commonService.appVersion = version;
+        this.version = version;
+        console.log('App Version:', this.commonService.appVersion);
+      }).catch(() => {
+        this.commonService.appVersion = '0.0.1'; // fallback
+        this.version = '0.0.1';
+        console.log('catch App Version:', this.commonService.appVersion);
+      });
+
+      debugger
+      // 
+      if (this.isnetworkConnected()) {
+        console.log('Internet Connected');
+        this.initializeapp();
+      } else {
+        console.log('Internet Not Connected');
+        //this.router.navigate(['/nointernet']);
+        this.router.navigateByUrl('/nointernet');
+      }
+
+      // Checking Network Connection
+      this.initializeNetworkEvents();
+    });
+
   }
 
   // Function to open the menu
@@ -87,4 +142,33 @@ export class AppComponent {
     });
     (await alert).present();
   }
+
+  /* BOOTS a listener on the network */
+  public initializeNetworkEvents(): void {
+    /* OFFLINE */
+    debugger
+    this.network.onDisconnect().subscribe(() => {
+      console.log('Connection Lost');
+      this.router.navigate(['/nointernet']);
+    })
+    /* ONLINE */
+    this.network.onConnect().subscribe(() => {
+      console.log('Connection got ');
+      // Hiding loader if network is connected
+      // this.apiCall.hideLoding();
+    })
+  }
+
+  // Checking network connected or not
+  isnetworkConnected(): boolean {
+    debugger
+    const conntype = this.network.type;
+    console.log('conntype ', conntype);
+    // if we are testing in mobile device, enable below line and comment another return statement.
+    // return conntype && conntype !== 'unknown' && conntype !== 'none';
+
+    // if we are testing in chrome device, enable below line and comment above line
+    return conntype !== 'none' && conntype !== 'unknown';
+  }
+
 }

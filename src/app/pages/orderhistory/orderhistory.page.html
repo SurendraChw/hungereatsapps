@@ -7,9 +7,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" [style.--padding-bottom.px]="100">
+<!-- <ion-content class="ion-padding" [style.--padding-bottom.px]="100">
   <ion-list class="ord-list">
-    <ion-item *ngFor="let order of orders" (click)="goToOrderDetail(order.id)">
+    <ion-item *ngFor="let order of orders" (click)="goToOrderDetail(order.orderId)">
       <ion-label>
         <h2 class="order-status">
           Order Placed
@@ -21,6 +21,41 @@
         </h2>
         <p>{{ order.date | date: 'MM/dd/yyyy, hh:mm a' }}</p>
       </ion-label>
+      <ion-note class="price-cls" slot="end">${{ order.total }}</ion-note>
+      <ion-icon class="forward-arrow-cls" name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content> -->
+
+
+<ion-content class="ion-padding" [style.--padding-bottom.px]="100">
+  <ion-list class="ord-list">
+    <ion-item *ngFor="let order of orders" (click)="goToOrderDetail(order)">
+      <ion-label>
+        <h2 class="order-status">
+          #{{ order.orderId }} - {{ order.ordertype }}
+          <ion-icon
+            *ngIf="order.paymenttype === 'Cash'"
+            name="cash-outline"
+            color="success"
+            class="payment-icon"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="order.paymenttype === 'Card'"
+            name="card-outline"
+            color="primary"
+            class="payment-icon"
+          ></ion-icon>
+          <span *ngIf="order.status === 'Success'" class="status-icon success-icon">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </span>
+          <span *ngIf="order.status === 'Cancel'" class="status-icon cancel-icon">
+            <ion-icon name="close-outline"></ion-icon>
+          </span>
+        </h2>
+        <p class="date-cls">{{ order.date | date: 'MM/dd/yyyy, hh:mm a' }}</p>
+      </ion-label>
+      
       <ion-note class="price-cls" slot="end">${{ order.total }}</ion-note>
       <ion-icon class="forward-arrow-cls" name="chevron-forward-outline" slot="end"></ion-icon>
     </ion-item>

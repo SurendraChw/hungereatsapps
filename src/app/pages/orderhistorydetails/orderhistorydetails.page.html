@@ -8,23 +8,70 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-list class="ord-list">
+
+  <!-- Top Section -->
+  <ion-item lines="none">
+    <ion-label>
+      <h2 class="order-status-cls">
+        Order #{{ orderId }} | {{ ordertype }} | {{ paymenttype }} | 
+        <!-- <ion-icon
+          *ngIf="paymenttype === 'Cash'"
+          name="cash-outline"
+          color="success"
+          style="margin-left: 8px;"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="paymenttype === 'Card'"
+          name="card-outline"
+          color="primary"
+          style="margin-left: 8px;"
+        ></ion-icon> -->
+        <span *ngIf="orderstatus === 'Success'" class="status-icon success-icon">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </span>
+        <span *ngIf="orderstatus === 'Cancel'" class="status-icon cancel-icon">
+          <ion-icon name="close-outline"></ion-icon>
+        </span>
+      </h2>
+    </ion-label>
+  </ion-item>
+
+  <!-- <ion-list class="ord-list">
     <ion-item *ngFor="let item of orderItems">
       <ion-label>
         <h2>{{ item.name }}</h2>
-        <!-- <p>{{ item.description }}</p> -->
         <p>Quantity: {{ item.quantity }}</p>
       </ion-label>
       <ion-note class="price-cls" slot="end">${{ item.quantity * item.price }}</ion-note>
     </ion-item>
+  </ion-list> -->
+
+  <!-- Items List -->
+  <ion-list class="ord-list">
+    <ion-item *ngFor="let item of orderItems">
+      <ion-label>
+        <h2 class="name-cls">{{ item.name }} | Quantity: {{ item.quantity }} | Price: {{ item.price }}</h2>
+        <!-- <p>Quantity: {{ item.quantity }}</p> -->
+        <p class="notes-cls" *ngIf="item.notes">Notes: {{ item.notes }}</p>
+      </ion-label>
+      <ion-note class="price-cls" slot="end">
+        ${{ (item.quantity * item.price) | number: '1.2-2' }}
+      </ion-note>
+    </ion-item>
   </ion-list>
+
+  <ion-row *ngIf="ordertype === 'Phone' && orderstatus === 'Running'" class="ion-padding ion-justify-content-around">
+    <ion-button color="success" (click)="updateOrderStatus('Success')">Confirm</ion-button>
+    <ion-button color="danger" (click)="updateOrderStatus('Cancel')">Cancel</ion-button>
+  </ion-row>
+
 </ion-content>
 
 <ion-footer class="footer-total">
   <ion-toolbar>
     <ion-row class="ion-align-items-center ion-justify-content-between ion-padding-horizontal">
       <ion-col size="12">
-        <h3 class="tlt-amt-cls">Total Amount: ${{ totalWithQuantity }}</h3>
+        <h3 class="tlt-amt-cls price-cls">Total Amount: ${{ totalWithQuantity  | number: '1.2-2' }}</h3>
       </ion-col>
     </ion-row>
   </ion-toolbar>

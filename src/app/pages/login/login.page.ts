@@ -3,8 +3,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonserviceService } from 'src/app/services/commonservice.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,15 +19,37 @@ export class LoginPage implements OnInit {
   password = '';
   emailError = '';
   passwordError = '';
+  backButtonSubscription!: Subscription;
 
-  constructor(private firestore: AngularFirestore, private auth: AuthService, private router: Router, public commonService: CommonserviceService,  ) {}
+  constructor(private firestore: AngularFirestore, private auth: AuthService, private router: Router, public commonService: CommonserviceService, 
+    private platform: Platform) {}
 
   ngOnInit() {
-    debugger
     // this.auth.getUsers().subscribe(data => {
     //   console.log('Fetched users:', data);
     // });
   }
+
+  ionViewDidEnter() {
+    debugger
+    // disable the hardware back button
+    document.addEventListener('backbutton', this.blockBackButton, false);
+  }
+
+  ionViewWillLeave() {
+    debugger
+    // disable the hardware back button
+    document.removeEventListener('backbutton', this.blockBackButton, false);
+  }
+
+  // Function to block the hardware back button
+  // This function will be called when the back button is pressed
+  blockBackButton = (event: any) => {
+    debugger
+    event.preventDefault(); // Prevent default behavior
+    console.log('Hardware back button blocked');
+    // You can also show a toast or alert if needed
+  };
 
   // Function to validate email
   validateEmail() {
@@ -47,7 +70,6 @@ export class LoginPage implements OnInit {
 
   // Function to handle login button click
   async login() {
-    debugger
     this.validateEmail();
     this.validatePassword();
     console.log('Login clicked::', this.email, this.password);
@@ -82,7 +104,10 @@ export class LoginPage implements OnInit {
             jsonObj.password = this.password;
             this.commonService.showToast("Logged In Successfully");
             this.commonService.setLocalStorageByKeyValue('loginInfo', JSON.stringify(snapshot.docs[0].data()));
+            this.commonService.setLocalStorageByKeyValue('loginUserId', snapshot.docs[0].id);
             this.commonService.userRole = snapshot.docs[0].data()['role'];
+            this.commonService.userId = snapshot.docs[0].id;
+            console.log('userID:', snapshot.docs[0].id);
             console.log('userRole:', this.commonService.userRole);
             this.router.navigateByUrl('/home');
           } else {

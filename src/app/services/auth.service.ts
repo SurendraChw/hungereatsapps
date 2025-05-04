@@ -24,7 +24,6 @@ export class AuthService {
   }
 
   getUsers(): Observable<any[]> {
-    debugger
     return this.firestore.collection('users').valueChanges({ idField: 'id' });
   }
 }

@@ -26,7 +26,11 @@ const routes: Routes = [
   {
     path: 'orderhistorydetails',
     loadChildren: () => import('./pages/orderhistorydetails/orderhistorydetails.module').then( m => m.OrderhistorydetailsPageModule)
+  },  {
+    path: 'nointernet',
+    loadChildren: () => import('./pages/nointernet/nointernet.module').then( m => m.NointernetPageModule)
   },
+
 ];
 
 @NgModule({

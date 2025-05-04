@@ -1,0 +1,17 @@
+<!-- <ion-content class="ion-padding no-internet-page">
+  <div class="no-internet-container">
+    <ion-icon name="cloud-offline-outline" class="no-internet-icon"></ion-icon>
+    <h2>No Internet Connection</h2>
+    <p>Please check your network settings and try again.</p>
+    <ion-button color="primary" (click)="retryConnection()">Retry</ion-button>
+  </div>
+</ion-content> -->
+
+<ion-content class="no-internet-page" [fullscreen]="true" scroll-y="false">
+  <div class="no-internet-container">
+    <ion-icon name="wifi-outline" class="no-internet-icon"></ion-icon>
+    <h2>No Internet Connection</h2>
+    <p>Please check your connection and try again.</p>
+    <ion-button expand="block" (click)="retryConnection()">Retry</ion-button>
+  </div>
+</ion-content>
